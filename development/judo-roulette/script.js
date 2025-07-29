@@ -23,12 +23,27 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupInitialInputs() {
         itemInputsContainer.innerHTML = '';
         for (let i = 1; i <= 7; i++) {
+            const inputWrapper = document.createElement('div');
+            inputWrapper.style.display = 'flex';
+            inputWrapper.style.alignItems = 'center';
+            inputWrapper.style.justifyContent = 'center';
+            inputWrapper.style.marginBottom = '10px';
+
+            if (i === 1) { // Only add star for the first item
+                const star = document.createElement('span');
+                star.textContent = '☆ ';
+                star.style.color = 'white';
+                star.style.marginRight = '5px';
+                inputWrapper.appendChild(star);
+            }
+
             const newInput = document.createElement('input');
             newInput.type = 'text';
             newInput.className = 'item-input';
             newInput.placeholder = `項目${i}`;
             newInput.value = `テスト${i}`;
-            itemInputsContainer.appendChild(newInput);
+            inputWrapper.appendChild(newInput);
+            itemInputsContainer.appendChild(inputWrapper);
         }
         addItemButton.style.display = 'none';
     }
@@ -67,7 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. Animate the scroll
         let start = null;
         const duration = 10000; // 10 seconds
-        const startScrollTop = 0;
+        
+        // Start from the bottom of the scrollable area
+        const startScrollTop = list.scrollHeight - containerHeight;
         rouletteContainer.scrollTop = startScrollTop;
 
         function animate(timestamp) {
@@ -77,12 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const easeOutCubic = t => (--t) * t * t + 1;
             const easedT = easeOutCubic(t);
 
-            rouletteContainer.scrollTop = startScrollTop + (targetScrollTop - startScrollTop) * easedT;
+            // Calculate current scrollTop: decreases from startScrollTop to targetScrollTop
+            rouletteContainer.scrollTop = startScrollTop - (startScrollTop - targetScrollTop) * easedT;
 
             if (progress < duration) {
                 animationFrameId = requestAnimationFrame(animate);
             } else {
-                rouletteContainer.scrollTop = targetScrollTop;
+                rouletteContainer.scrollTop = targetScrollTop; // Ensure it lands exactly
                 setTimeout(() => {
                     // Hide all items except the winner
                     const allItems = list.children;
