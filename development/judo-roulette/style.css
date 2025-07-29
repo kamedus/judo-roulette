@@ -42,6 +42,11 @@ body, html {
     color: white;
 }
 
+#initial-screen h2 {
+    color: white;
+    margin-top: 20px;
+}
+
 .item-input {
     display: block;
     margin: 10px auto;

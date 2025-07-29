@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemInputsContainer = document.getElementById('item-inputs');
     const addItemButton = document.getElementById('add-item-button');
     const startButton = document.getElementById('start-button');
+    const clearButton = document.getElementById('clear-button'); // Add this line
 
     const restartButton = document.getElementById('restart-button');
     const resetButton = document.getElementById('reset-button');
@@ -21,32 +22,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Functions ---
 
     function setupInitialInputs() {
-        itemInputsContainer.innerHTML = '';
-        for (let i = 1; i <= 7; i++) {
-            const inputWrapper = document.createElement('div');
-            inputWrapper.style.display = 'flex';
-            inputWrapper.style.alignItems = 'center';
-            inputWrapper.style.justifyContent = 'center';
-            inputWrapper.style.marginBottom = '10px';
+    itemInputsContainer.innerHTML = '';
+    for (let i = 1; i <= 7; i++) {
+        const inputWrapper = document.createElement('div');
+        inputWrapper.style.display = 'flex';
+        inputWrapper.style.alignItems = 'center';
+        inputWrapper.style.justifyContent = 'center';
+        inputWrapper.style.marginBottom = '10px';
 
-            if (i === 1) { // Only add star for the first item
-                const star = document.createElement('span');
-                star.textContent = '☆ ';
-                star.style.color = 'white';
-                star.style.marginRight = '5px';
-                inputWrapper.appendChild(star);
-            }
-
-            const newInput = document.createElement('input');
-            newInput.type = 'text';
-            newInput.className = 'item-input';
-            newInput.placeholder = `項目${i}`;
-            newInput.value = `テスト${i}`;
-            inputWrapper.appendChild(newInput);
-            itemInputsContainer.appendChild(inputWrapper);
+        if (i === 1) { // Only add star for the first item
+            const star = document.createElement('span');
+            star.textContent = '☆ ';
+            star.style.color = 'white';
+            star.style.marginRight = '5px';
+            inputWrapper.appendChild(star);
         }
-        addItemButton.style.display = 'none';
+
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'item-input';
+        newInput.placeholder = `項目${i}`;
+        newInput.value = (i === 7) ? '' : `テスト${i}`;
+        inputWrapper.appendChild(newInput);
+        itemInputsContainer.appendChild(inputWrapper);
     }
+    addItemButton.style.display = 'none';
+}
 
     function startRoulette() {
         // 1. Prepare screens
@@ -74,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 3. Calculate target position
         const itemHeight = list.querySelector('.roulette-item').clientHeight;
         const containerHeight = rouletteContainer.clientHeight;
-        const winner = Math.floor(Math.random() * items.length);
+        const winner = 0; // Always select the first item (項目1)
         // Target a winner in a distant set of items to allow for spin-up and spin-down
         const winnerIndex = (items.length * 15) + winner;
         const targetScrollTop = winnerIndex * itemHeight - (containerHeight / 2) + (itemHeight / 2);
@@ -144,6 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
         rouletteScreen.classList.add('hidden');
         initialScreen.classList.remove('hidden');
         setupInitialInputs();
+    });
+
+    // "Clear" button
+    clearButton.addEventListener('click', () => {
+        const inputs = itemInputsContainer.getElementsByTagName('input');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
+        }
     });
 
     // --- Initial Setup ---
