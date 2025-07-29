@@ -13,7 +13,7 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/Users/kamedamiyukishuu/development/images/ルーレット背景.png');
+    background-image: url('ルーレット背景.png');
     background-size: cover;
     background-position: center;
     z-index: -1;
