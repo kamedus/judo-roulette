@@ -50,7 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < 20; i++) {
             displayItems.push(...items);
         }
-        list.innerHTML = displayItems.map(item => `<div class="roulette-item">${item}</div>`).join('');
+        list.innerHTML = displayItems.map((item, index) => {
+            const originalIndex = index % items.length;
+            const colorClass = (originalIndex % 2 === 0) ? 'item-light-blue' : 'item-light-pink';
+            return `<div class="roulette-item ${colorClass}">${item}</div>`;
+        }).join('');
 
         // 3. Calculate target position
         const itemHeight = list.querySelector('.roulette-item').clientHeight;
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Animate the scroll
         let start = null;
-        const duration = 6000; // 6 seconds
+        const duration = 10000; // 10 seconds
         const startScrollTop = 0;
         rouletteContainer.scrollTop = startScrollTop;
 

@@ -29,7 +29,6 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
     padding: 20px;
     box-sizing: border-box;
 }
@@ -85,6 +84,14 @@ button {
     line-height: 1.5;
     height: 72px; /* 48px * 1.5 */
     text-shadow: 2px 2px 4px black;
+}
+
+.item-light-blue {
+    color: #ADD8E6; /* Light Blue */
+}
+
+.item-light-pink {
+    color: #FFB6C1; /* Light Pink */
 }
 
 #roulette-controls {
